@@ -26,7 +26,7 @@ func main() {
 		"client2": c2,
 	}
 
-	srv := server.Create(log, healthChecks, onClose)
+	srv := server.Create(log, healthChecks, 8000, onClose)
 	api.Create(srv.Router)
 	srv.Start()
 }

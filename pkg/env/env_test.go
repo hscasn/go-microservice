@@ -52,10 +52,18 @@ func TestIntWithDefault_UseDefault(t *testing.T) {
 	}
 }
 
-func TestIntWithDefault_NoDefault(t *testing.T) {
+func TestIntWithDefault_Invalid(t *testing.T) {
 	os.Setenv("_SOME_VARIABLE", "hello")
 	r := IntWithDefault("_SOME_VARIABLE", 5)
 	if r != 5 {
+		t.Errorf("should not have given a default value")
+	}
+}
+
+func TestIntWithDefault_NoDefault(t *testing.T) {
+	os.Setenv("_SOME_VARIABLE", "2")
+	r := IntWithDefault("_SOME_VARIABLE", 5)
+	if r != 2 {
 		t.Errorf("should not have given a default value")
 	}
 }
@@ -67,6 +75,16 @@ func TestInt_WithPanic(t *testing.T) {
 		}
 	}()
 	os.Setenv("_SOME_VARIABLE", "")
+	Int("_SOME_VARIABLE")
+}
+
+func TestInt_Invalid(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("should have panicked")
+		}
+	}()
+	os.Setenv("_SOME_VARIABLE", "hello")
 	Int("_SOME_VARIABLE")
 }
 
@@ -85,16 +103,24 @@ func TestInt_NoPanic(t *testing.T) {
 
 func TestFloatWithDefault_UseDefault(t *testing.T) {
 	os.Setenv("_SOME_VARIABLE", "")
-	r := FloatWithDefault("_SOME_VARIABLE", 5)
-	if r != 5 {
+	r := FloatWithDefault("_SOME_VARIABLE", 5.2)
+	if r != 5.2 {
 		t.Errorf("should have given a default value")
 	}
 }
 
-func TestFloatWithDefault_NoDefault(t *testing.T) {
+func TestFloatWithDefault_Invalid(t *testing.T) {
 	os.Setenv("_SOME_VARIABLE", "hello")
-	r := FloatWithDefault("_SOME_VARIABLE", 5)
-	if r != 5 {
+	r := FloatWithDefault("_SOME_VARIABLE", 5.2)
+	if r != 5.2 {
+		t.Errorf("should not have given a default value")
+	}
+}
+
+func TestFloatWithDefault_NoDefault(t *testing.T) {
+	os.Setenv("_SOME_VARIABLE", "2.3")
+	r := FloatWithDefault("_SOME_VARIABLE", 5.2)
+	if r != 2.3 {
 		t.Errorf("should not have given a default value")
 	}
 }
@@ -106,6 +132,16 @@ func TestFloat_WithPanic(t *testing.T) {
 		}
 	}()
 	os.Setenv("_SOME_VARIABLE", "")
+	Float("_SOME_VARIABLE")
+}
+
+func TestFloat_Invalid(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("should have panicked")
+		}
+	}()
+	os.Setenv("_SOME_VARIABLE", "hello")
 	Float("_SOME_VARIABLE")
 }
 

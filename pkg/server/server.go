@@ -2,15 +2,18 @@ package server
 
 import (
 	"fmt"
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/api"
-	"go-microservice/pkg/health"
-	"go-microservice/pkg/log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"go-microservice/pkg/health"
+
+	"go-microservice/pkg/api"
+	"go-microservice/pkg/log"
+
+	"github.com/go-chi/chi"
 )
 
 // Server contains the settings for the server
@@ -18,18 +21,26 @@ type Server struct {
 	log      log.Interface
 	Router   *chi.Mux
 	onClose  func()
-	shutdown chan bool
+	Shutdown chan bool
 	httpSrv  *http.Server
+	Addr     string
+	port     int
 }
 
-// Create a new server based on a list of services
+// Create creates a new server based on a list of services
 func Create(
 	log log.Interface,
 	healthChecks health.Checks,
+	port int,
 	onClose func(),
 ) *Server {
 	router := chi.NewRouter()
-	server := &Server{log, router, onClose, nil, nil}
+	server := &Server{
+		log:     log,
+		Router:  router,
+		onClose: onClose,
+		port:    port,
+	}
 
 	api.Create(router, healthChecks)
 
@@ -39,7 +50,7 @@ func Create(
 // Start a server
 func (s *Server) Start() {
 	shutdown := make(chan bool, 1)
-	s.shutdown = shutdown
+	s.Shutdown = shutdown
 
 	// Capturing OS signals
 	sigs := make(chan os.Signal, 1)
@@ -52,17 +63,16 @@ func (s *Server) Start() {
 	}()
 
 	go func() {
-
-		addr := fmt.Sprintf("0.0.0.0:%d", 8000)
+		s.Addr = fmt.Sprintf("0.0.0.0:%d", s.port)
 		srv := &http.Server{
-			Addr:         addr,
+			Addr:         s.Addr,
 			WriteTimeout: time.Second * 15,
 			ReadTimeout:  time.Second * 15,
 			IdleTimeout:  time.Second * 60,
 			Handler:      s.Router,
 		}
 		s.httpSrv = srv
-		s.log.Infof("Server starting at %s", addr)
+		s.log.Infof("Server starting at %s", s.Addr)
 		if err := srv.ListenAndServe(); err != nil {
 			s.onClose()
 			s.log.Error(err)

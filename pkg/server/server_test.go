@@ -43,7 +43,10 @@ func TestCreate(t *testing.T) {
 	addr := fmt.Sprintf("http://%s", s.httpSrv.Addr)
 
 	// Ready
-	res, _ := testingtools.HTTPRequest(t, addr, "GET", "/ready")
+	res, _, err := testingtools.HTTPRequest(addr, "GET", "/ready")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}

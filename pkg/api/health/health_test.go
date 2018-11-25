@@ -20,11 +20,17 @@ func TestCreate(t *testing.T) {
 	s := httptest.NewServer(router)
 	defer s.Close()
 
-	res, _ := testingtools.HTTPRequest(t, s.URL, "GET", "/")
+	res, _, err := testingtools.HTTPRequest(s.URL, "GET", "/")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
-	res, _ = testingtools.HTTPRequest(t, s.URL, "GET", "/details")
+	res, _, err = testingtools.HTTPRequest(s.URL, "GET", "/details")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
@@ -51,7 +57,7 @@ func TestSummarizedNoClients(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -80,7 +86,7 @@ func TestSummarizedTwoThatSucceed(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -112,7 +118,7 @@ func TestSummarizedOneThatFails(t *testing.T) {
 	failedToPingRex, _ := regexp.Compile(
 		"one or more health checks could not be pinged")
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {
@@ -155,7 +161,7 @@ func TestSummarizedTwoThatFail(t *testing.T) {
 	failedToPingRex, _ := regexp.Compile(
 		"one or more health checks could not be pinged")
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {
@@ -192,7 +198,7 @@ func TestDetailsNoClients(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -227,7 +233,7 @@ func TestDetailsTwoThatSucceed(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -278,7 +284,7 @@ func TestDetailsOneThatFails(t *testing.T) {
 	failedToPingRex, _ := regexp.Compile(
 		"one or more health checks could not be pinged")
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {
@@ -340,7 +346,7 @@ func TestDetailsTwoThatFail(t *testing.T) {
 	failedToPingRex, _ := regexp.Compile(
 		"one or more health checks could not be pinged")
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {

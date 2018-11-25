@@ -17,16 +17,16 @@ type status struct {
 	AdditionalInfo *statusAdditionalInfo `json:"additionalInfo"`
 }
 
-// APIResponse is the final response created by the model. This gets sent to
+// Response is the final response created by the model. This gets sent to
 // the client as the response
-type APIResponse struct {
+type Response struct {
 	Status          status      `json:"status"`
 	Result          interface{} `json:"result"`
 	ServerTimestamp string      `json:"serverTimestamp"`
 	headers         map[string]string
 }
 
-// ResponseData is the input we use to build the APIResponse. It has only
+// ResponseData is the input we use to build the Response. It has only
 // the necessary data the factory needs
 type ResponseData struct {
 	Code     int
@@ -36,7 +36,7 @@ type ResponseData struct {
 	Errors   []string
 }
 
-// SendJSONResponse accepts a ResponseData and sends an APIResponse to the
+// SendJSONResponse accepts a ResponseData and sends an Response to the
 // client
 func SendJSONResponse(d ResponseData, w http.ResponseWriter) {
 	// Adding default values if not present
@@ -74,7 +74,7 @@ func SendJSONResponse(d ResponseData, w http.ResponseWriter) {
 	}
 
 	// Creating Response that will be sent
-	r := APIResponse{
+	r := Response{
 		Status: status{
 			Code:           d.Code,
 			Message:        http.StatusText(d.Code),

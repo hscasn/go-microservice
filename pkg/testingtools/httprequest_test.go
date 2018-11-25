@@ -9,8 +9,6 @@ import (
 )
 
 func TestHTTPRequest(t *testing.T) {
-	t.Parallel()
-
 	router := chi.NewRouter()
 	router.Patch("/my/path", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusTeapot)
@@ -19,7 +17,10 @@ func TestHTTPRequest(t *testing.T) {
 	s := httptest.NewServer(router)
 	defer s.Close()
 
-	res, body := HTTPRequest(t, s.URL, "PATCH", "/my/path")
+	res, body, err := HTTPRequest(s.URL, "PATCH", "/my/path")
+	if err != nil {
+		t.Error(err)
+	}
 
 	if res.StatusCode != http.StatusTeapot {
 		t.Errorf("status code should be 'i am a teapot'")

@@ -18,14 +18,20 @@ func TestCreate(t *testing.T) {
 	defer s.Close()
 
 	// Settings
-	res, _ := testingtools.HTTPRequest(t, s.URL, "GET", "/loglevel")
+	res, _, err := testingtools.HTTPRequest(s.URL, "GET", "/loglevel")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
 	loglevels := []string{"", "debug", "info", "warn", "error", "fatal"}
 	for _, p := range loglevels {
 		path := fmt.Sprintf("/loglevel/%s", p)
-		res, _ = testingtools.HTTPRequest(t, s.URL, "PUT", path)
+		res, _, err = testingtools.HTTPRequest(s.URL, "PUT", path)
+		if err != nil {
+			t.Error(err)
+		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("should get OK status for level '%s'", p)
 		}

@@ -22,17 +22,22 @@ func TestCreate(t *testing.T) {
 	defer s.Close()
 
 	// Settings
-	res, _ := testingtools.HTTPRequest(t, s.URL, "GET", "/")
+	res, _, err := testingtools.HTTPRequest(s.URL, "GET", "/")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
 	loglevels := []string{"", "debug", "info", "warn", "error", "fatal"}
 	for _, p := range loglevels {
-		res, _ = testingtools.HTTPRequest(
-			t,
+		res, _, err = testingtools.HTTPRequest(
 			s.URL,
 			"PUT",
 			fmt.Sprintf("/%s", p))
+		if err != nil {
+			t.Error(err)
+		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("should get OK status for level '%s'", p)
 		}
@@ -54,7 +59,7 @@ func TestGetLevel(t *testing.T) {
 	usageRex, _ := regexp.Compile(
 		"(?i)specify a level by hitting the endpoint")
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -94,7 +99,7 @@ func TestPutLevelFor(t *testing.T) {
 		currLevelRex, _ := regexp.Compile(fmt.Sprintf(
 			"(?i)level changed to: %s", level.String()))
 
-		res := &apiresponse.APIResponse{}
+		res := &apiresponse.Response{}
 		json.Unmarshal([]byte(w.Body.String()), res)
 
 		testDefAdditionalInfo := func() {

@@ -20,7 +20,10 @@ func TestCreate(t *testing.T) {
 	s := httptest.NewServer(router)
 	defer s.Close()
 
-	res, _ := testingtools.HTTPRequest(t, s.URL, "GET", "/")
+	res, _, err := testingtools.HTTPRequest(s.URL, "GET", "/")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
@@ -47,7 +50,7 @@ func TestMakeDefaultNoServices(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -76,7 +79,7 @@ func TestMakeDefaultTwoThatSucceed(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -105,7 +108,7 @@ func TestMakeDefaultOneThatFails(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {
@@ -134,7 +137,7 @@ func TestMakeDefaultTwoThatFail(t *testing.T) {
 
 	h(w, r)
 
-	res := &apiresponse.APIResponse{}
+	res := &apiresponse.Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 503 {

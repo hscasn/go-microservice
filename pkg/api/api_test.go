@@ -19,30 +19,45 @@ func TestCreate(t *testing.T) {
 	defer s.Close()
 
 	// Ready
-	res, _ := testingtools.HTTPRequest(t, s.URL, "GET", "/ready")
+	res, _, err := testingtools.HTTPRequest(s.URL, "GET", "/ready")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
 
 	// Health
-	res, _ = testingtools.HTTPRequest(t, s.URL, "GET", "/health")
+	res, _, err = testingtools.HTTPRequest(s.URL, "GET", "/health")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
-	res, _ = testingtools.HTTPRequest(t, s.URL, "GET", "/health/details")
+	res, _, err = testingtools.HTTPRequest(s.URL, "GET", "/health/details")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
 
 	// Settings
-	res, _ = testingtools.HTTPRequest(t, s.URL, "GET", "/settings/loglevel")
+	res, _, err = testingtools.HTTPRequest(s.URL, "GET", "/settings/loglevel")
+	if err != nil {
+		t.Error(err)
+	}
 	if res.StatusCode != http.StatusOK {
 		t.Errorf("should get OK status")
 	}
 	loglevels := []string{"", "debug", "info", "warn", "error", "fatal"}
 	for _, p := range loglevels {
 		path := fmt.Sprintf("/settings/loglevel/%s", p)
-		res, _ = testingtools.HTTPRequest(t, s.URL, "PUT", path)
+		res, _, err = testingtools.HTTPRequest(s.URL, "PUT", path)
+		if err != nil {
+			t.Error(err)
+		}
 		if res.StatusCode != http.StatusOK {
 			t.Errorf("should get OK status for level '%s'", p)
 		}

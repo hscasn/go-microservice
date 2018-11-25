@@ -15,7 +15,7 @@ func TestCreateDefault(t *testing.T) {
 
 	SendJSONResponse(ResponseData{}, w)
 
-	res := &APIResponse{}
+	res := &Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	if w.Code != 200 {
@@ -79,7 +79,7 @@ func TestCreateComplex(t *testing.T) {
 	}
 	SendJSONResponse(c, w)
 
-	res := &APIResponse{}
+	res := &Response{}
 	json.Unmarshal([]byte(w.Body.String()), res)
 
 	expectedResult, _ := json.Marshal(result)

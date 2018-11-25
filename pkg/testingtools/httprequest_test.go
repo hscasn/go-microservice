@@ -9,6 +9,7 @@ import (
 )
 
 func TestHTTPRequest(t *testing.T) {
+	t.Parallel()
 	router := chi.NewRouter()
 	router.Patch("/my/path", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusTeapot)

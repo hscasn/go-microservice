@@ -5,6 +5,7 @@ import (
 )
 
 func TestSetLevel(t *testing.T) {
+	t.Parallel()
 	Create("hello world", true)
 	if GetLevel() != InfoLevel {
 		t.Errorf("The default level should be Info")
@@ -32,6 +33,7 @@ func TestSetLevel(t *testing.T) {
 }
 
 func TestLevel_String(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name string
 		l    Level

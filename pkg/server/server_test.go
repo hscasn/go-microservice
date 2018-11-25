@@ -13,6 +13,7 @@ import (
 )
 
 func TestCreate(t *testing.T) {
+	t.Parallel()
 	calledOnClose := false
 	onClose := func() {
 		calledOnClose = true
@@ -53,6 +54,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestCreateThatFails(t *testing.T) {
+	t.Parallel()
 	calledOnClose := false
 	onClose := func() {
 		calledOnClose = true

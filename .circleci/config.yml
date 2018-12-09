@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11
+      - image: redis:4.0
+    working_directory: /app
+    steps:
+      - checkout
+      - run: go get -v -d .
+      - run: make test-only

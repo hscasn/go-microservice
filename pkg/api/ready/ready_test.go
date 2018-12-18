@@ -3,9 +3,9 @@ package ready
 import (
 	"encoding/json"
 	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/health"
-	"go-microservice/pkg/testingtools"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/testingtools"
 	"net/http"
 	"net/http/httptest"
 	"testing"

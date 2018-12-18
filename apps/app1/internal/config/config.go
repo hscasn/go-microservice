@@ -1,7 +1,7 @@
 package config
 
 import (
-	"go-microservice/pkg/env"
+	"github.com/hscasn/go-microservice/pkg/env"
 )
 
 // Framework is the top-level configuration struct

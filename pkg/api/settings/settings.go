@@ -2,7 +2,7 @@ package settings
 
 import (
 	"github.com/go-chi/chi"
-	"go-microservice/pkg/api/settings/loglevel"
+	"github.com/hscasn/go-microservice/pkg/api/settings/loglevel"
 )
 
 // Create will bind this API to an exiting router

@@ -2,7 +2,7 @@ package dummy
 
 import (
 	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
 	"net/http"
 )
 

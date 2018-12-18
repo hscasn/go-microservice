@@ -3,8 +3,8 @@ package loglevel
 import (
 	"fmt"
 	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/log"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/log"
 	"net/http"
 )
 

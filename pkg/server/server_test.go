@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"go-microservice/pkg/health"
-	"go-microservice/pkg/testingtools"
+	"github.com/hscasn/go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/testingtools"
 
 	"github.com/sirupsen/logrus"
 )

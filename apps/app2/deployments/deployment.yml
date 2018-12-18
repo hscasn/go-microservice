@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{frameworkName}}
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: {{frameworkName}}
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{frameworkName}}
+spec:
+  selector:
+    matchLabels:
+      app: {{frameworkName}}
+  replicas: 4
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{frameworkName}}
+    spec:
+      containers:
+      - image: {{dockerReg}}/{{frameworkName}}:{{imageVersion}}
+        name: {{frameworkName}}
+        env:
+        - name: FRAMEWORK_NAME
+          value: "{{frameworkName}}"
+        ports:
+        - containerPort: 8000
+          name: {{frameworkName}}
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{frameworkName}}
+spec:
+  minReplicas: {{minReplicas}}
+  maxReplicas: {{maxReplicas}}
+  targetCPUUtilizationPercentage: 80
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: {{frameworkName}}

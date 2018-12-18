@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/health"
 
-	"go-microservice/pkg/api"
-	"go-microservice/pkg/log"
+	"github.com/hscasn/go-microservice/pkg/api"
+	"github.com/hscasn/go-microservice/pkg/log"
 
 	"github.com/go-chi/chi"
 )

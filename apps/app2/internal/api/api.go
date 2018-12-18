@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/go-chi/chi"
-	"go-microservice/internal/api/dummy"
+	"github.com/hscasn/go-microservice/apps/app2/internal/api/dummy"
 )
 
 // Create will bind this API to an exiting router

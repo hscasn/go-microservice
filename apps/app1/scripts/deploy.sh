@@ -38,7 +38,7 @@ docker build \
 	-t ${DOCKER_REG}/${FRAMEWORK_NAME}:${COMMIT_VERSION} ${ROOTPATH}
 
 echo "Pushing image ${FRAMEWORK_NAME}:${COMMIT_VERSION} to Docker Hub"
-#docker push ${DOCKER_REG}/${FRAMEWORK_NAME}:${COMMIT_VERSION}
+docker push ${DOCKER_REG}/${FRAMEWORK_NAME}:${COMMIT_VERSION}
 
 # Build k8s objects YAML file from template
 echo "Building Kubernetes objects YAML file for development from template"
@@ -51,4 +51,4 @@ cat ./deployments/deployment.yml \
         > ./deployments/_k8s_objects.yml
 
 echo "Deploying to Kubernetes cluster(s)"
-#kubectl apply -f ./deployments/_k8s_objects.yml
+kubectl apply -f ./deployments/_k8s_objects.yml

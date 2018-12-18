@@ -18,9 +18,9 @@ test:
 	make test-only
 	go tool cover -func cover.out
 
-# Create the container and deploy the application
+# Create the containers and deploy the apps modified on the last commit
 deploy:
-	#./scripts/deploy.sh
+	./scripts/deploychangedapps.sh
 
 # Removing junk
 clean:

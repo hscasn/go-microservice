@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/health"
 
-	"go-microservice/pkg/api"
-	"go-microservice/pkg/log"
+	"github.com/hscasn/go-microservice/pkg/api"
+	"github.com/hscasn/go-microservice/pkg/log"
 
 	"github.com/go-chi/chi"
 )
@@ -28,7 +28,7 @@ type Server struct {
 }
 
 // Create creates a new server based on a list of services
-func Create(
+func New(
 	log log.Interface,
 	healthChecks health.Checks,
 	port int,
@@ -42,7 +42,7 @@ func Create(
 		port:    port,
 	}
 
-	api.Create(router, healthChecks)
+	api.New(router, healthChecks)
 
 	return server
 }

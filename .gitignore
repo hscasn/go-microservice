@@ -1,4 +1,4 @@
 .vscode
 cover.out
 start
-deployments/_k8s_objects.yml
+_k8s_objects.yml

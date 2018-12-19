@@ -2,21 +2,22 @@ package health
 
 import (
 	"encoding/json"
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/health"
-	"go-microservice/pkg/testingtools"
 	"net/http"
 	"net/http/httptest"
 	"regexp"
 	"testing"
+
+	"github.com/go-chi/chi"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/testingtools"
 )
 
 func TestCreate(t *testing.T) {
 	t.Parallel()
 
 	router := chi.NewRouter()
-	Create(router, health.Checks{})
+	New(router, health.Checks{})
 	s := httptest.NewServer(router)
 	defer s.Close()
 

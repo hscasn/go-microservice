@@ -1,13 +1,14 @@
 package dummy
 
 import (
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
 	"net/http"
+
+	"github.com/go-chi/chi"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
 )
 
 // Create will bind this API to an exiting router
-func Create(router chi.Router) {
+func New(router chi.Router) {
 	router.Get("/", controller)
 }
 

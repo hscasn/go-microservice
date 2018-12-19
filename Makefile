@@ -6,27 +6,25 @@ export $(shell sed 's/=.*//' $(envfile))
 test-containers-setup:
 	./scripts/startcontainer.sh redis '-p 6379:6379 redis:4.0'
 
-# Only runs the tests. Use if you don't want to set up containers
-test-only:
+# Runs the tests on a CI environment. Use if you don't want to set up containers
+test-ci:
 	go clean --testcache ./pkg/...
-	go test -parallel 5 -cover -coverprofile cover.out ./...
+	go test -parallel 5 -cover -coverprofile cover.out ./pkg/...
+	./scripts/testapps.sh ci
 
 # Sets up the dependencies for tests and run them
 test:
 	make test-containers-setup
-	make test-only
+	go clean --testcache ./pkg/...
+	go test -parallel 5 -cover -coverprofile cover.out ./pkg/...
+	./scripts/testapps.sh
 	go tool cover -func cover.out
 
-
-# Run the application
-run:
-	go run internal/app.go
-
-# Only build the application
-build:
-	go mod tidy
-	go build -o start internal/app.go
-
-# Create the container and deploy the application
+# Create the containers and deploy the apps modified on the last commit
 deploy:
-	./scripts/deploy.sh
+	./scripts/deploychangedapps.sh
+
+# Removing junk
+clean:
+	rm -f cover.out
+	./scripts/cleanapps.sh

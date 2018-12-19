@@ -3,21 +3,22 @@ package loglevel
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/log"
-	"go-microservice/pkg/testingtools"
 	"net/http"
 	"net/http/httptest"
 	"regexp"
 	"testing"
+
+	"github.com/go-chi/chi"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/log"
+	"github.com/hscasn/go-microservice/pkg/testingtools"
 )
 
 func TestCreate(t *testing.T) {
 	t.Parallel()
 
 	router := chi.NewRouter()
-	Create(router)
+	New(router)
 	s := httptest.NewServer(router)
 	defer s.Close()
 

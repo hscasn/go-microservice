@@ -1,14 +1,15 @@
 package ready
 
 import (
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/health"
 	"net/http"
+
+	"github.com/go-chi/chi"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/health"
 )
 
 // Create will bind this API to an existing router
-func Create(router chi.Router, healthChecks health.Checks) {
+func New(router chi.Router, healthChecks health.Checks) {
 	router.Get("/", controller(healthChecks))
 }
 

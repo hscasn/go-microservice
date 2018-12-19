@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"go-microservice/pkg/health"
-	"go-microservice/pkg/testingtools"
+	"github.com/hscasn/go-microservice/pkg/health"
+	"github.com/hscasn/go-microservice/pkg/testingtools"
 
 	"github.com/sirupsen/logrus"
 )
@@ -20,7 +20,7 @@ func TestCreate(t *testing.T) {
 	}
 	log := logrus.NewEntry(logrus.New())
 
-	s := Create(log, health.Checks{}, 8001, onClose)
+	s := New(log, health.Checks{}, 8001, onClose)
 	go s.Start()
 	defer func() {
 		tries := 0
@@ -61,7 +61,7 @@ func TestCreateThatFails(t *testing.T) {
 	}
 	log := logrus.NewEntry(logrus.New())
 
-	s := Create(log, health.Checks{}, 1, onClose)
+	s := New(log, health.Checks{}, 1, onClose)
 	go s.Start()
 	defer func() {
 		tries := 0

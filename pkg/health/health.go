@@ -10,7 +10,7 @@ const (
 type Checks map[string]interface{ Ping() bool }
 
 // Create will turn a list of health checks in to a map of check->health
-func Create(healthChecks Checks) map[string]string {
+func New(healthChecks Checks) map[string]string {
 
 	r := map[string]string{}
 	for name, check := range healthChecks {
@@ -23,7 +23,7 @@ func Create(healthChecks Checks) map[string]string {
 
 // CreateSummarized is will turn a list of health checks into healthy/unhealthy
 func CreateSummarized(healthChecks Checks) string {
-	return Summarize(Create(healthChecks))
+	return Summarize(New(healthChecks))
 }
 
 // Summarize is will turn a map of name->health into healthy/unhealthy

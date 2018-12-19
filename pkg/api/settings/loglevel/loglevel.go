@@ -2,14 +2,15 @@ package loglevel
 
 import (
 	"fmt"
-	"github.com/go-chi/chi"
-	"go-microservice/pkg/apiresponse"
-	"go-microservice/pkg/log"
 	"net/http"
+
+	"github.com/go-chi/chi"
+	"github.com/hscasn/go-microservice/pkg/apiresponse"
+	"github.com/hscasn/go-microservice/pkg/log"
 )
 
 // Create will bind this API to an exiting router
-func Create(router chi.Router) {
+func New(router chi.Router) {
 	router.Get("/", getLevel)
 
 	router.Put("/", putLevelFor(log.WarnLevel, true))

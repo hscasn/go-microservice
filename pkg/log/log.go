@@ -67,7 +67,7 @@ type Interface interface {
 }
 
 // Create a new logger
-func Create(frameworkName string, usingStackdriver bool) Interface {
+func New(frameworkName string, usingStackdriver bool) Interface {
 	logrus.SetLevel(logrus.InfoLevel)
 	if usingStackdriver {
 		logrus.SetFormatter(stackdriver.NewFormatter(

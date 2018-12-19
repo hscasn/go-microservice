@@ -22,6 +22,8 @@ jobs:
           name: Deploy
           command: |
             echo "Deploying..."
+            ## Uncomment the line below to actually run
+            ## the deployment script
             #make deploy
 workflows:
   version: 2

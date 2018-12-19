@@ -1,5 +1,8 @@
 ROOTPATH="$(dirname $(readlink -f ${0}))/.."
-CI=$(( "${1:='-'}" == "ci" ))
+CI=0
+if [ "${1:='-'}" = "ci" ]; then
+    CI=1
+fi
 
 for APP in $(ls apps); do
     APPPATH="${ROOTPATH}/apps/${APP}"

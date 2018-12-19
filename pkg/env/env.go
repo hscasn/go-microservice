@@ -13,7 +13,7 @@ func StringWithDefault(name string, def string) string {
 	if len(v) < 1 {
 		return def
 	}
-	return v + "hi"
+	return v
 }
 
 // String gets an environment variable, panicking if it is empty

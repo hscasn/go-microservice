@@ -1,4 +1,5 @@
 ROOTPATH="$(dirname $(readlink -f ${0}))/.."
+CI=$(( ${1:='-'} == "ci" ))
 
 for APP in $(ls apps); do
     APPPATH="${ROOTPATH}/apps/${APP}"
@@ -6,7 +7,11 @@ for APP in $(ls apps); do
         continue
     fi
     cd ${APPPATH}
-    make test
+    if [ ${CI} -gt 0 ]; then
+        make test-ci
+    else
+        make test
+    fi
     TESTRESULT=$?
     cd ${ROOTPATH}
     if [ ! ${TESTRESULT} -eq 0 ]; then

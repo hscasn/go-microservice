@@ -1,12 +1,13 @@
 version: 2
 jobs:
   test:
+    working_directory: ~/go/src/github.com/hscasn/go-microservice
     docker:
       - image: circleci/golang:1.11
       - image: redis:4.0
     steps:
       - checkout
-      - run: go get -v -d .
+      - run: go get -v ./...
       - run: make test-ci
   deploy:
     working_directory: ~/go/src/github.com/hscasn/go-microservice
@@ -16,7 +17,7 @@ jobs:
       - checkout
       - run:
           name: Get dependencies
-          command: go get ./...
+          command: go get -v ./...
       - run:
           name: Deploy
           command: |

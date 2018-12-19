@@ -23,9 +23,9 @@ echo "Modified packages (${#MODIFIED_PKG[@]}): $(echo ${MODIFIED_PKG[@]} | tr '\
 echo "Apps to deploy (${#APPS_TO_DEPLOY[@]}): $(echo ${APPS_TO_DEPLOY[@]} | tr '\n' ' ')"
 echo "================================================================================"
 
-#for APP in ${APPS_TO_DEPLOY[@]}; do
-#	APPPATH="${ROOTPATH}/apps/${APP}"
-#	cd ${APPPATH}
-#	make deploy
-#	cd ${ROOTPATH}
-#done
+for APP in ${APPS_TO_DEPLOY[@]}; do
+	APPPATH="${ROOTPATH}/apps/${APP}"
+	cd ${APPPATH}
+	make deploy
+	cd ${ROOTPATH}
+done

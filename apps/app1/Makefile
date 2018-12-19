@@ -29,7 +29,8 @@ build:
 
 # Create the container and deploy the application
 deploy:
-	./scripts/deploy.sh
+	echo "deploying 1"
+	#./scripts/deploy.sh
 
 # Removing junk
 clean:

@@ -27,12 +27,10 @@ workflows:
   build-deploy:
     jobs:
       - test:
-          context: org-global
       - deploy:
-          context: org-global
           requires:
               - test
           filters:
             branches:
               only:
-                - master
+                - monorepo

@@ -9,14 +9,14 @@ import (
 )
 
 // Create will bind this API to an existing router
-func Create(router *chi.Mux, healthChecks healthPkg.Checks) {
+func New(router *chi.Mux, healthChecks healthPkg.Checks) {
 	router.Route("/health", func(r chi.Router) {
-		health.Create(r, healthChecks)
+		health.New(r, healthChecks)
 	})
 	router.Route("/ready", func(r chi.Router) {
-		ready.Create(r, healthChecks)
+		ready.New(r, healthChecks)
 	})
 	router.Route("/settings", func(r chi.Router) {
-		settings.Create(r)
+		settings.New(r)
 	})
 }

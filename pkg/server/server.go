@@ -28,7 +28,7 @@ type Server struct {
 }
 
 // Create creates a new server based on a list of services
-func Create(
+func New(
 	log log.Interface,
 	healthChecks health.Checks,
 	port int,
@@ -42,7 +42,7 @@ func Create(
 		port:    port,
 	}
 
-	api.Create(router, healthChecks)
+	api.New(router, healthChecks)
 
 	return server
 }

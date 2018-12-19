@@ -11,7 +11,7 @@ func TestCreate(t *testing.T) {
 	// Setting env variables
 	os.Setenv("FRAMEWORK_NAME", "hello_there")
 
-	c := Create()
+	c := New()
 	if c.Name != "hello_there" {
 		t.Errorf("framework name is incorrect")
 	}

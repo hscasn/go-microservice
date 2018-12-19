@@ -21,11 +21,11 @@ func TestCreate(t *testing.T) {
 
 	var c map[string]string
 
-	c = Create(Checks{})
+	c = New(Checks{})
 	if len(c) != 0 {
 		t.Errorf("should have returned an empty map")
 	}
-	c = Create(Checks{
+	c = New(Checks{
 		"client1": &dummyCheckThatSucceeds{},
 		"client2": &dummyCheckThatFails{},
 	})
@@ -80,12 +80,12 @@ func TestSummarize(t *testing.T) {
 
 	var c map[string]string
 
-	c = Create(Checks{})
+	c = New(Checks{})
 	if Summarize(c) != HEALTHY {
 		t.Errorf("should be healthy for no clients")
 	}
 
-	c = Create(Checks{
+	c = New(Checks{
 		"client1": &dummyCheckThatSucceeds{},
 		"client2": &dummyCheckThatSucceeds{},
 	})
@@ -93,7 +93,7 @@ func TestSummarize(t *testing.T) {
 		t.Errorf("should be healthy for two clients that ping")
 	}
 
-	c = Create(Checks{
+	c = New(Checks{
 		"client1": &dummyCheckThatFails{},
 		"client2": &dummyCheckThatFails{},
 	})
@@ -101,7 +101,7 @@ func TestSummarize(t *testing.T) {
 		t.Errorf("should be unhealthy for two clients that dont ping")
 	}
 
-	c = Create(Checks{
+	c = New(Checks{
 		"client1": &dummyCheckThatSucceeds{},
 		"client2": &dummyCheckThatFails{},
 	})

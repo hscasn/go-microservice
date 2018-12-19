@@ -9,8 +9,8 @@ type Framework struct {
 	Name string
 }
 
-// Create will recover the environment settings and parse them into a struct
-func Create() Framework {
+// New will recover the environment settings and parse them into a struct
+func New() Framework {
 	return Framework{
 		Name: env.String("FRAMEWORK_NAME"),
 	}

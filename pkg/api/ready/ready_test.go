@@ -2,13 +2,14 @@ package ready
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
 	"github.com/go-chi/chi"
 	"github.com/hscasn/go-microservice/pkg/apiresponse"
 	"github.com/hscasn/go-microservice/pkg/health"
 	"github.com/hscasn/go-microservice/pkg/testingtools"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 func TestCreate(t *testing.T) {
@@ -16,7 +17,7 @@ func TestCreate(t *testing.T) {
 
 	router := chi.NewRouter()
 	checks := health.Checks{}
-	Create(router, checks)
+	New(router, checks)
 	s := httptest.NewServer(router)
 	defer s.Close()
 

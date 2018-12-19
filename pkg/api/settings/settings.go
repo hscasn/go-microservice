@@ -6,8 +6,8 @@ import (
 )
 
 // Create will bind this API to an exiting router
-func Create(router chi.Router) {
+func New(router chi.Router) {
 	router.Route("/loglevel", func(r chi.Router) {
-		loglevel.Create(r)
+		loglevel.New(r)
 	})
 }

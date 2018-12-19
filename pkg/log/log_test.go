@@ -6,7 +6,7 @@ import (
 
 func TestSetLevel(t *testing.T) {
 	t.Parallel()
-	Create("hello world", true)
+	New("hello world", true)
 	if GetLevel() != InfoLevel {
 		t.Errorf("The default level should be Info")
 	}

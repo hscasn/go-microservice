@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	config := config.Create()
-	log := log.Create(config.Name, false)
+	config := config.New()
+	log := log.New(config.Name, false)
 
 	onClose := func() {
 		log.Infof("Server %s is shutting down\n", config.Name)
@@ -23,7 +23,7 @@ func main() {
 		"dummyworker1": s,
 	}
 
-	srv := server.Create(log, healthChecks, 8000, onClose)
-	api.Create(srv.Router)
+	srv := server.New(log, healthChecks, 8000, onClose)
+	api.New(srv.Router)
 	srv.Start()
 }

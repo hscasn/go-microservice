@@ -1,14 +1,15 @@
 package health
 
 import (
+	"net/http"
+
 	"github.com/go-chi/chi"
 	"github.com/hscasn/go-microservice/pkg/apiresponse"
 	"github.com/hscasn/go-microservice/pkg/health"
-	"net/http"
 )
 
 // Create will bind this API to an existing router
-func Create(router chi.Router, healthChecks health.Checks) {
+func New(router chi.Router, healthChecks health.Checks) {
 	router.Get("/", summarizedController(healthChecks))
 	router.Get("/details", detailsController(healthChecks))
 }
@@ -42,7 +43,7 @@ func sendStatus(
 	w http.ResponseWriter,
 ) {
 
-	detailedHealth := health.Create(healthChecks)
+	detailedHealth := health.New(healthChecks)
 	summaryHealth := health.Summarize(detailedHealth)
 
 	var s interface{} = simpleResponse{summaryHealth}

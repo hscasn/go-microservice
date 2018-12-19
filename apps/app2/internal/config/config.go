@@ -12,6 +12,6 @@ type Framework struct {
 // Create will recover the environment settings and parse them into a struct
 func Create() Framework {
 	return Framework{
-		Name: env.String("FRAMEWORK_NAME"),
+		Name: env.String("FRAMEWORK_NAME") + "ok",
 	}
 }

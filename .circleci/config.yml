@@ -8,3 +8,31 @@ jobs:
       - checkout
       - run: go get -v -d .
       - run: make test-ci
+  deploy:
+    working_directory: ~/go/src/github.com/hscasn/go-microservice
+    docker:
+      - image: circleci/golang:1.11
+    steps:
+      - checkout
+      - run:
+          name: Get dependencies
+          command: go get ./...
+      - run:
+          name: Deploy
+          command: |
+            echo "Deploying..."
+            #make deploy
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - test:
+          context: org-global
+      - deploy:
+          context: org-global
+          requires:
+              - test
+          filters:
+            branches:
+              only:
+                - master
